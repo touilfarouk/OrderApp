@@ -1,0 +1,124 @@
+Features in This Update:
+✅ Dropdown to select a deliverer for filtering
+✅ Displays only products for the selected deliverer
+✅ Option to view all products
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProductScreen(
+    navController: NavController,
+    productViewModel: ProductViewModel = hiltViewModel()
+) {
+    val uiState by productViewModel.uiState.collectAsStateWithLifecycle()
+    val deliverers by productViewModel.deliverers.collectAsStateWithLifecycle()
+
+    val isAddingProduct = remember { mutableStateOf(false) }
+    val editingProduct = remember { mutableStateOf<Product?>(null) }
+    val name = remember { mutableStateOf("") }
+    val price = remember { mutableStateOf("") }
+    val selectedDeliverer = remember { mutableStateOf(0) }
+    val selectedDelivererFilter = remember { mutableStateOf<Int?>(null) } // Selected deliverer for filtering
+
+    Scaffold(
+        topBar = { TopAppBar(title = { Text(text = "Products") }) },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                isAddingProduct.value = true
+                editingProduct.value = null
+                name.value = ""
+                price.value = ""
+                selectedDeliverer.value = deliverers.firstOrNull()?.delivererId ?: 0
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Product")
+            }
+        }
+    ) { paddingValues ->
+        Column(modifier = Modifier.padding(paddingValues)) {
+            // Deliverer selection dropdown for filtering
+            var expanded by remember { mutableStateOf(false) }
+            val selectedDelivererName = deliverers.find { it.delivererId == selectedDelivererFilter.value }?.name ?: "All Deliverers"
+
+            Box(modifier = Modifier.padding(16.dp)) {
+                Button(onClick = { expanded = true }) {
+                    Text("Filter: $selectedDelivererName")
+                }
+                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                    DropdownMenuItem(
+                        text = { Text("All Deliverers") },
+                        onClick = {
+                            selectedDelivererFilter.value = null
+                            expanded = false
+                        }
+                    )
+                    deliverers.forEach { deliverer ->
+                        DropdownMenuItem(
+                            text = { Text(deliverer.name) },
+                            onClick = {
+                                selectedDelivererFilter.value = deliverer.delivererId
+                                expanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            // Filter products by selected deliverer
+            val filteredProducts = if (selectedDelivererFilter.value != null) {
+                uiState.data.filter { it.belongsToDeliverer.toInt() == selectedDelivererFilter.value }
+            } else {
+                uiState.data
+            }
+
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(filteredProducts) { product ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                            .clickable {
+                                editingProduct.value = product
+                                name.value = product.name
+                                price.value = product.pricePerAmount.toString()
+                                selectedDeliverer.value = product.belongsToDeliverer.toInt()
+                                isAddingProduct.value = true
+                            },
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(text = product.name)
+                                Text(text = "Price: ${product.pricePerAmount}")
+                                val delivererName = deliverers.find { it.delivererId == product.belongsToDeliverer.toInt() }?.name ?: "Unknown"
+                                Text(text = "Deliverer: $delivererName")
+                            }
+                            IconButton(onClick = {
+                                editingProduct.value = product
+                                name.value = product.name
+                                price.value = product.pricePerAmount.toString()
+                                selectedDeliverer.value = product.belongsToDeliverer.toInt()
+                                isAddingProduct.value = true
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = "Edit",
+                                    tint = Color.Blue
+                                )
+                            }
+                            IconButton(onClick = { productViewModel.delete(product) }) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Delete",
+                                    tint = Color.Red
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
