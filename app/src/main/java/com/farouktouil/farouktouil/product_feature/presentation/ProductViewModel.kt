@@ -7,6 +7,7 @@ import com.farouktouil.farouktouil.core.data.local.entities.DelivererEntity
 import com.farouktouil.farouktouil.core.domain.model.Product
 import com.farouktouil.farouktouil.product_feature.domain.useCase.DeleteProductUseCase
 import com.farouktouil.farouktouil.product_feature.domain.useCase.GetAllProductsUseCase
+import com.farouktouil.farouktouil.product_feature.domain.useCase.GetProductsForDelivererUseCase
 import com.farouktouil.farouktouil.product_feature.domain.useCase.InsertProductUseCase
 import com.farouktouil.farouktouil.product_feature.domain.useCase.UpdateProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,15 +21,24 @@ class ProductViewModel @Inject constructor(
     private val deleteProductUseCase: DeleteProductUseCase,
     private val updateProductUseCase: UpdateProductUseCase,
     private val getAllProductsUseCase: GetAllProductsUseCase,
-    private val delivererDao: DelivererDao // Inject DelivererDao
+    private val getProductsForDelivererUseCase: GetProductsForDelivererUseCase, // UseCase to fetch products for a specific deliverer
+    private val delivererDao: DelivererDao
 ) : ViewModel() {
 
-    val uiState =
-        getAllProductsUseCase.invoke()
-            .map { ProductUiState(it) }
-            .stateIn(viewModelScope, SharingStarted.Eagerly, ProductUiState())
+    private val _selectedDelivererId = MutableStateFlow<Int?>(null)
+    val selectedDelivererId: StateFlow<Int?> = _selectedDelivererId.asStateFlow()
 
-    // Fetch DelivererEntity objects instead of just IDs
+    val uiState: StateFlow<ProductUiState> = _selectedDelivererId
+        .flatMapLatest { delivererId ->
+            if (delivererId == null) {
+                getAllProductsUseCase.invoke() // Fetch all products if no delivererId is selected
+            } else {
+                getProductsForDelivererUseCase.invoke(delivererId) // Fetch products for the specific deliverer
+            }
+        }
+        .map { ProductUiState(it) }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, ProductUiState())
+
     private val _deliverers = MutableStateFlow<List<DelivererEntity>>(emptyList())
     val deliverers: StateFlow<List<DelivererEntity>> = _deliverers.asStateFlow()
 
@@ -48,7 +58,7 @@ class ProductViewModel @Inject constructor(
     fun insert(name: String, pricePerAmount: Double, belongsToDeliverer: Int) = viewModelScope.launch {
         val product = Product(
             name = name,
-            pricePerAmount = pricePerAmount.toFloat(), // Convert Double to Float
+            pricePerAmount = pricePerAmount.toFloat(),
             belongsToDeliverer = belongsToDeliverer.toString()
         )
         insertProductUseCase.invoke(product)
@@ -60,6 +70,10 @@ class ProductViewModel @Inject constructor(
 
     fun delete(product: Product) = viewModelScope.launch {
         deleteProductUseCase.invoke(product)
+    }
+
+    fun selectDeliverer(delivererId: Int?) {
+        _selectedDelivererId.value = delivererId
     }
 }
 

@@ -41,8 +41,14 @@ import com.farouktouil.farouktouil.core.domain.model.Product
 @Composable
 fun ProductScreen(
     navController: NavController,
+    delivererId: Int?, // Add delivererId as a parameter
     productViewModel: ProductViewModel = hiltViewModel()
 ) {
+    // Set the selected deliverer in the ViewModel
+    LaunchedEffect(delivererId) {
+        productViewModel.selectDeliverer(delivererId)
+    }
+
     val uiState by productViewModel.uiState.collectAsStateWithLifecycle()
     val isAddingProduct = remember { mutableStateOf(false) }
     val editingProduct = remember { mutableStateOf<Product?>(null) }
@@ -59,7 +65,7 @@ fun ProductScreen(
                 editingProduct.value = null
                 name.value = ""
                 price.value = ""
-                selectedDeliverer.value = 0
+                selectedDeliverer.value = delivererId ?: 0 // Set selectedDeliverer to delivererId if provided
             }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Product")
             }
@@ -142,7 +148,6 @@ fun ProductScreen(
         }
     }
 }
-
 
 @Composable
 fun ProductForm(

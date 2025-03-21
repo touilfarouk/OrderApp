@@ -47,7 +47,9 @@ fun OrderChooseProductsScreen(
             TopAppBar(
                 title = { Text("Product Section") },
                 actions = {
-                    IconButton(onClick = { navController.navigate(ScreenRoutes.ProductScreen.route) }) {
+                    IconButton(onClick = { navController.navigate(
+                        ScreenRoutes.ProductScreen.route + "/${delivererId}"
+                    ) }) {
                         Icon(Icons.Default.Add, contentDescription = "Add Product")
                     }
                 },
@@ -57,12 +59,12 @@ fun OrderChooseProductsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.onCheckoutClick() },
-               // containerColor = orange
+                // containerColor = orange
             ) {
                 Icon(
                     imageVector = Icons.Default.PriceCheck,
                     contentDescription = "fab_money",
-                   // tint = white,
+                    // tint = white,
                     modifier = Modifier.size(32.dp)
                 )
             }
@@ -82,8 +84,8 @@ fun OrderChooseProductsScreen(
                 onValueChange = { viewModel.onProductSearchQueryChange(it) },
                 label = { Text("Search Product") },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                  //  focusedBorderColor = orange,
-                  //  cursorColor = orange
+                    //  focusedBorderColor = orange,
+                    //  cursorColor = orange
                 ),
                 maxLines = 1,
                 modifier = Modifier.fillMaxWidth()

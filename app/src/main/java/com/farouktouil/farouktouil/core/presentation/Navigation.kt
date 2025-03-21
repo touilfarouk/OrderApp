@@ -1,9 +1,11 @@
 package com.farouktouil.farouktouil.core.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.farouktouil.farouktouil.deliverer_feature.presentation.DelivererScreen
 import com.farouktouil.farouktouil.order_feature.presentation.OrderChooseDelivererScreen
 import com.farouktouil.farouktouil.order_feature.presentation.OrderChooseProductsScreen
@@ -25,8 +27,15 @@ fun Navigation() {
         composable(ScreenRoutes.DelivererScreen.route){
             DelivererScreen(navController = navController)
         }
-        composable(ScreenRoutes.ProductScreen.route){
-            ProductScreen(navController = navController)
+        composable(
+            route = ScreenRoutes.ProductScreen.route + "/{delivererId}",
+            arguments = listOf(navArgument("delivererId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val delivererId = backStackEntry.arguments?.getInt("delivererId")
+            ProductScreen(
+                navController = navController,
+                delivererId = delivererId
+            )
         }
 
         composable(ScreenRoutes.OrderChooseDelivererScreen.route){
