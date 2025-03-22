@@ -2,6 +2,7 @@ package com.farouktouil.farouktouil.order_feature.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
@@ -29,12 +30,17 @@ fun DelivererUiListItem(
     ){
         Text(
             delivererListItem.name,
-            color =  onPrimaryLight
+            color =  primaryLight
         )
-        Icon(
-            imageVector = Icons.Default.ArrowForwardIos,
-            contentDescription = "arrow_right",
-            tint =  primaryLight
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End // Aligns content to the end (right)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowForwardIos,
+                contentDescription = "arrow_right",
+                tint = primaryLight
+            )
+        }
     }
 }
