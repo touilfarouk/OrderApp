@@ -57,7 +57,7 @@ fun Navigation() {
 sealed class ScreenRoutes(val route:String){
     object OrderScreen:ScreenRoutes("order_screen")
     object OrderChooseDelivererScreen:ScreenRoutes("order_choose_deliverer_screen")
-    object OrderChooseProductsScreen:ScreenRoutes("order_choose_prodcuts_screen")
+    object OrderChooseProductsScreen:ScreenRoutes("order_choose_products_screen")
     object DelivererScreen:ScreenRoutes("deliverer_screen")
     object ProductScreen:ScreenRoutes("product_screen")
 

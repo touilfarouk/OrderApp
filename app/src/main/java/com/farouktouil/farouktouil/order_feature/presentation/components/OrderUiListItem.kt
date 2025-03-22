@@ -12,6 +12,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farouktouil.farouktouil.order_feature.presentation.state.OrderListItem
+import com.farouktouil.farouktouil.ui.theme.onPrimaryLight
+import com.farouktouil.farouktouil.ui.theme.primaryLight
 
 
 @Composable
@@ -33,13 +35,13 @@ fun OrderUiListItem(
             Text(
                 orderListItem.delivererName,
                 fontWeight = FontWeight.Bold,
-                color =  Color.Gray,
+                color =  primaryLight,
                 fontSize = 20.sp
             )
             Text(
                 "%.2f".format(orderListItem.totalAmount)+" DZ",
                 fontWeight = FontWeight.Bold,
-                color =  Color.Gray,
+                color =  primaryLight,
                 fontSize = 20.sp
             )
         }
@@ -51,7 +53,7 @@ fun OrderUiListItem(
         ){
             Text(
                 orderListItem.orderDate,
-                color =  Color.Gray,
+                color =  primaryLight,
                 fontSize = 16.sp
             )
         }

@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.farouktouil.farouktouil.order_feature.presentation.state.DelivererListItem
+import com.farouktouil.farouktouil.ui.theme.onPrimaryLight
+import com.farouktouil.farouktouil.ui.theme.primaryLight
 
 
 @Composable
@@ -27,12 +29,12 @@ fun DelivererUiListItem(
     ){
         Text(
             delivererListItem.name,
-            color =  Color.Gray
+            color =  onPrimaryLight
         )
         Icon(
             imageVector = Icons.Default.ArrowForwardIos,
             contentDescription = "arrow_right",
-            tint =  Color.Gray
+            tint =  primaryLight
         )
     }
 }

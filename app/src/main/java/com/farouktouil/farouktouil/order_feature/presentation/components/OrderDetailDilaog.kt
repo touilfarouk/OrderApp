@@ -90,7 +90,7 @@ fun OrderDetailDialog(
                                     "${it.selectedAmount}x "+it.name
                                 )
                                 Text(
-                                    "%.2f".format(it.pricePerAmount*it.selectedAmount)+" €"
+                                    "%.2f".format(it.pricePerAmount*it.selectedAmount)+" DZ"
                                 )
                             }
                         }

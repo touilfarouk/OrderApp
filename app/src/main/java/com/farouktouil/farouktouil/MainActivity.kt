@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import com.farouktouil.farouktouil.core.presentation.Navigation
 import com.farouktouil.farouktouil.ui.theme.FaroukTouilTheme
+import com.farouktouil.farouktouil.ui.theme.primaryLight
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,8 +25,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           // window.statusBarColor = orange.toArgb()
-          //  window.navigationBarColor = orange.toArgb()
+            window.statusBarColor =primaryLight.toArgb()
+            window.navigationBarColor = primaryLight.toArgb()
             FaroukTouilTheme {
                 Navigation()
             }

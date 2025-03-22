@@ -50,7 +50,7 @@ fun ProductUiListItem(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    "%.2f".format(productListItem.pricePerAmount)+" €",
+                    "%.2f".format(productListItem.pricePerAmount)+" DZ",
                     color =  Color.Gray,
                     fontSize = 14.sp
                 )

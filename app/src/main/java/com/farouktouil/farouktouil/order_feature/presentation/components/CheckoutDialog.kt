@@ -88,7 +88,7 @@ fun CheckoutDialog(
                                         "${it.selectedAmount}x "+it.name
                                     )
                                     Text(
-                                        "%.2f".format(it.pricePerAmount*it.selectedAmount)+" €"
+                                        "%.2f".format(it.pricePerAmount*it.selectedAmount)+" DZ"
                                     )
                                 }
                             }
@@ -117,7 +117,7 @@ fun CheckoutDialog(
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            "%.2f".format(selectedProducts.sumOf { (it.selectedAmount*it.pricePerAmount).toDouble() })+" €"
+                            "%.2f".format(selectedProducts.sumOf { (it.selectedAmount*it.pricePerAmount).toDouble() })+" DZ"
                             , fontWeight = FontWeight.Bold
                         )
                     }

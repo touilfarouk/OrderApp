@@ -3,6 +3,7 @@ package com.farouktouil.farouktouil.order_feature.presentation
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,12 +11,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.PriceCheck
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -23,6 +26,7 @@ import androidx.navigation.NavController
 import com.farouktouil.farouktouil.core.presentation.ScreenRoutes
 import com.farouktouil.farouktouil.order_feature.presentation.components.CheckoutDialog
 import com.farouktouil.farouktouil.order_feature.presentation.components.ProductUiListItem
+import com.farouktouil.farouktouil.ui.theme.primaryContainerLight
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,9 +66,9 @@ fun OrderChooseProductsScreen(
                 // containerColor = orange
             ) {
                 Icon(
-                    imageVector = Icons.Default.PriceCheck,
-                    contentDescription = "fab_money",
-                    // tint = white,
+                    imageVector = Icons.Default.Check, // Use the checkmark icon
+                    contentDescription = "fab_add_order",
+                    // tint = Color.White // Uncomment and use this if you want to set the tint to white
                     modifier = Modifier.size(32.dp)
                 )
             }
@@ -84,8 +88,8 @@ fun OrderChooseProductsScreen(
                 onValueChange = { viewModel.onProductSearchQueryChange(it) },
                 label = { Text("Search Product") },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    //  focusedBorderColor = orange,
-                    //  cursorColor = orange
+                      focusedBorderColor = primaryContainerLight,
+                     cursorColor = primaryContainerLight
                 ),
                 maxLines = 1,
                 modifier = Modifier.fillMaxWidth()
@@ -93,7 +97,7 @@ fun OrderChooseProductsScreen(
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.padding(top = 20.dp)
+                modifier = Modifier.padding(top = 20.dp).border(1.dp, primaryContainerLight, RoundedCornerShape(10.dp))
             ) {
                 items(
                     items = productsToShow,

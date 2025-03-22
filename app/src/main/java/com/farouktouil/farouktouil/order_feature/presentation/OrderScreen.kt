@@ -30,6 +30,8 @@ import androidx.navigation.NavController
 import com.farouktouil.farouktouil.core.presentation.ScreenRoutes
 import com.farouktouil.farouktouil.order_feature.presentation.components.OrderDetailDialog
 import com.farouktouil.farouktouil.order_feature.presentation.components.OrderUiListItem
+import com.farouktouil.farouktouil.ui.theme.primaryContainerLight
+import com.farouktouil.farouktouil.ui.theme.primaryLight
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -99,7 +101,7 @@ fun OrderScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(10.dp))
-                            .border(1.dp, color = Color.Gray, RoundedCornerShape(10.dp))
+                            .border(1.dp, color = primaryLight, RoundedCornerShape(10.dp))
                             .clickable {
                                 orderViewModel.onOrderClick(it.orderId)
                             }

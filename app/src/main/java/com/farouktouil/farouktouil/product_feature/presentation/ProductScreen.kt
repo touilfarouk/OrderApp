@@ -37,6 +37,9 @@ import com.farouktouil.farouktouil.core.data.local.entities.DelivererEntity
 import com.farouktouil.farouktouil.deliverer_feature.presentation.DelivererViewModel
 
 import com.farouktouil.farouktouil.core.domain.model.Product
+import com.farouktouil.farouktouil.ui.theme.errorLight
+import com.farouktouil.farouktouil.ui.theme.primaryContainerLight
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductScreen(
@@ -130,14 +133,14 @@ fun ProductScreen(
                                     Icon(
                                         imageVector = Icons.Default.Edit,
                                         contentDescription = "Edit",
-                                        tint = Color.Blue
+                                        tint = primaryContainerLight
                                     )
                                 }
                                 IconButton(onClick = { productViewModel.delete(product) }) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
                                         contentDescription = "Delete",
-                                        tint = Color.Red
+                                        tint = errorLight
                                     )
                                 }
                             }
