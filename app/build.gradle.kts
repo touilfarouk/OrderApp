@@ -105,4 +105,7 @@ dependencies {
     implementation ("androidx.room:room-ktx:$room_version")
     annotationProcessor ("androidx.room:room-compiler:$room_version")
 
+    // OpenCSV
+    implementation ("com.opencsv:opencsv:5.8")
+
 }

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farouktouil.farouktouil.core.presentation.ScreenRoutes
+import com.farouktouil.farouktouil.export_feature.presentation.ExportScreen
 import com.farouktouil.farouktouil.order_feature.presentation.components.OrderDetailDialog
 import com.farouktouil.farouktouil.order_feature.presentation.components.OrderUiListItem
 import com.farouktouil.farouktouil.ui.theme.primaryContainerLight
@@ -79,7 +80,8 @@ fun OrderScreen(
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ){
-                Text("There are no orders yet")
+                //Text("There are no orders yet")
+                ExportScreen()
             }
         }else{
             LazyColumn(

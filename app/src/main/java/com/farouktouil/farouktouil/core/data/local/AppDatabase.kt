@@ -14,7 +14,7 @@ import com.farouktouil.farouktouil.core.data.local.entities.ProductEntity
         OrderProductEntity::class,
         ProductEntity::class
     ],
-    version = 19,
+    version = 20,
     //exportSchema = false
 )
 abstract class AppDatabase:RoomDatabase() {
