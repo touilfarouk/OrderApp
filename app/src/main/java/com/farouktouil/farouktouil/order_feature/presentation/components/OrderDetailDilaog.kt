@@ -107,11 +107,11 @@ fun OrderDetailDialog(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         Text(
-                            "Total sum",
+                            "Total ",
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            "%.2f".format(orderDetailListItem.products.sumOf { (it.selectedAmount*it.pricePerAmount).toDouble() })+" €",
+                            "%.2f".format(orderDetailListItem.products.sumOf { (it.selectedAmount*it.pricePerAmount).toDouble() })+" DZ",
                             fontWeight = FontWeight.Bold
                         )
                     }

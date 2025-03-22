@@ -97,7 +97,7 @@ fun OrderChooseProductsScreen(
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.padding(top = 20.dp).border(1.dp, primaryContainerLight, RoundedCornerShape(10.dp))
+                modifier = Modifier.padding(top = 20.dp)
             ) {
                 items(
                     items = productsToShow,
@@ -107,6 +107,7 @@ fun OrderChooseProductsScreen(
                         productListItem = productListItem,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .border(1.dp, primaryContainerLight, RoundedCornerShape(10.dp))
                             .clip(RoundedCornerShape(10.dp))
                             .clickable { viewModel.onListItemClick(productListItem.id) }
                             .padding(10.dp),
