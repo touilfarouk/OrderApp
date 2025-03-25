@@ -14,17 +14,15 @@ import kotlinx.coroutines.flow.flow
 import java.io.StringWriter
 import java.io.Writer
 import kotlin.math.exp
-
 class DataConverterCSV : DataConverter {
 
-    private fun getCSVWriter(writer: Writer):ICSVWriter{
+    private fun getCSVWriter(writer: Writer): ICSVWriter {
         return CSVWriterBuilder(writer)
             .withSeparator(SEPARATOR)
             .withQuoteChar(CSVWriter.NO_QUOTE_CHARACTER)
             .withEscapeChar(CSVWriter.DEFAULT_ESCAPE_CHARACTER)
             .withLineEnd(CSVWriter.DEFAULT_LINE_END)
             .build()
-
     }
 
     override fun convertSensorData(
@@ -33,27 +31,30 @@ class DataConverterCSV : DataConverter {
         emit(Resource.Loading(GenerateInfo()))
         val writer = StringWriter()
         val csvWriter = getCSVWriter(writer)
-        val valuesForOnePercent = (exportDataList.size / 100)+1
+        val valuesForOnePercent = (exportDataList.size / 100) + 1
         var alreadyConvertedValues = 0
+
+        // Adjusted headers
         csvWriter.writeNext(HEADER_DATA)
 
-
-
-
-
         exportDataList.forEach { exportModel ->
+            val productsString = exportModel.products.joinToString(separator = "|") { product ->
+                "${product.name}:${product.amount}:${product.pricePerAmount}"
+            }
+
             csvWriter.writeNext(
                 arrayOf(
-                    "${exportModel.date}",
-                    "${exportModel.delivererName}",
-                    "${exportModel.delivererTime}",
-                    "${exportModel.products}"
+                    exportModel.date,
+                    exportModel.delivererName,
+                    exportModel.delivererTime,
+                    productsString  // ✅ Now formatted properly
                 )
             )
+
             alreadyConvertedValues += 1
-            if(alreadyConvertedValues%valuesForOnePercent == 0){
+            if (alreadyConvertedValues % valuesForOnePercent == 0) {
                 emit(Resource.Loading(GenerateInfo(
-                    progressPercentage = alreadyConvertedValues/valuesForOnePercent
+                    progressPercentage = alreadyConvertedValues / valuesForOnePercent
                 )))
             }
         }
@@ -67,8 +68,8 @@ class DataConverterCSV : DataConverter {
         writer.close()
     }
 
-    companion object{
+    companion object {
         const val SEPARATOR = ';'
-        val HEADER_DATA = arrayOf("sensor_data","time")
+        val HEADER_DATA = arrayOf("Date", "Deliverer Name", "Deliverer Time", "Products")
     }
 }
