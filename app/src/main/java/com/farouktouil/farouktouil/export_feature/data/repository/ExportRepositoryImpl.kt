@@ -6,6 +6,7 @@ import com.farouktouil.farouktouil.export_feature.data.file.FileWriter
 import com.farouktouil.farouktouil.export_feature.domain.model.ExportModel
 import com.farouktouil.farouktouil.export_feature.domain.model.PathInfo
 import com.farouktouil.farouktouil.export_feature.domain.repository.ExportRepository
+import com.farouktouil.farouktouil.order_feature.domain.model.Order
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -17,7 +18,7 @@ class ExportRepositoryImpl @Inject constructor(
     private val dataConverter: DataConverter
 ): ExportRepository {
     override fun startExportData(
-        exportList: List<ExportModel>
+        exportList: List<Order>
     ): Flow<Resource<PathInfo>> =
         dataConverter.convertSensorData(exportList).map { generateInfo ->
             when(generateInfo){

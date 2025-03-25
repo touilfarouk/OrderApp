@@ -4,6 +4,8 @@ import com.farouktouil.farouktouil.core.util.Resource
 import com.farouktouil.farouktouil.export_feature.data.converter.DataConverter
 import com.farouktouil.farouktouil.export_feature.data.converter.GenerateInfo
 import com.farouktouil.farouktouil.export_feature.domain.model.ExportModel
+import com.farouktouil.farouktouil.order_feature.domain.model.BoughtProduct
+import com.farouktouil.farouktouil.order_feature.domain.model.Order
 import com.opencsv.CSVWriter
 import com.opencsv.CSVWriterBuilder
 import com.opencsv.ICSVWriter
@@ -26,7 +28,7 @@ class DataConverterCSV : DataConverter {
     }
 
     override fun convertSensorData(
-        exportDataList: List<ExportModel>
+        exportDataList: List<Order>
     ): Flow<Resource<GenerateInfo>> = flow {
         emit(Resource.Loading(GenerateInfo()))
         val writer = StringWriter()
@@ -35,11 +37,17 @@ class DataConverterCSV : DataConverter {
         var alreadyConvertedValues = 0
         csvWriter.writeNext(HEADER_DATA)
 
+
+
+
+
         exportDataList.forEach { exportModel ->
             csvWriter.writeNext(
                 arrayOf(
-                    "${exportModel.sensorData}",
-                    "${exportModel.time}"
+                    "${exportModel.date}",
+                    "${exportModel.delivererName}",
+                    "${exportModel.delivererTime}",
+                    "${exportModel.products}"
                 )
             )
             alreadyConvertedValues += 1

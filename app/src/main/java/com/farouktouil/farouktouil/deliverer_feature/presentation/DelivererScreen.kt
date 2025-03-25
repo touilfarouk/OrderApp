@@ -7,8 +7,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -28,11 +30,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.farouktouil.farouktouil.core.domain.model.Deliverer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DelivererScreen(
     navController: NavController,
+    drawerState: DrawerState,
+    scope: CoroutineScope,
     delivererViewModel: DelivererViewModel = hiltViewModel()
 ) {
     val uiState by delivererViewModel.uiState.collectAsStateWithLifecycle()
@@ -41,7 +47,16 @@ fun DelivererScreen(
     val name = remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(text = "Deliverers") }) },
+        topBar =  {
+            TopAppBar(
+                title = { Text("Deliverer") },
+                navigationIcon = {
+                    IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                    }
+                }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 isAddingDeliverer.value = true

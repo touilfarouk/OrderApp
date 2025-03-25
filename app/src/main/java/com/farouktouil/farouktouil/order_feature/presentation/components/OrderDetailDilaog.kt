@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.farouktouil.farouktouil.export_feature.presentation.ExportScreen
 import com.farouktouil.farouktouil.order_feature.presentation.state.OrderDetailListItem
 
 
@@ -99,6 +100,7 @@ fun OrderDetailDialog(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ){
+
                     Divider()
                     Row(
                         modifier = Modifier
@@ -106,6 +108,7 @@ fun OrderDetailDialog(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
+
                         Text(
                             "Total ",
                             fontWeight = FontWeight.Bold
