@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ksp) // Ensure this is present
     alias(libs.plugins.daggerHilt)
+
 }
 
 android {

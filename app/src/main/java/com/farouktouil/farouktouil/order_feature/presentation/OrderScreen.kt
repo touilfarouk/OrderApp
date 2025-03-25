@@ -49,6 +49,10 @@ fun OrderScreen(
     scope: CoroutineScope,
     orderViewModel: OrderViewModel = hiltViewModel()
 ) {
+    fun deleteOrder(orderId: String) {
+        orderViewModel.deleteOrder(orderId)  // Call ViewModel function to delete the order
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -96,7 +100,8 @@ fun OrderScreen(
                 ) {
                     items(orderViewModel.orderList, key = { it.orderId }) {
                         OrderUiListItem(
-                            it,
+                            orderListItem = it,
+                            onDeleteClick = { deleteOrder(it.orderId) },  // Pass delete function
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(10.dp))

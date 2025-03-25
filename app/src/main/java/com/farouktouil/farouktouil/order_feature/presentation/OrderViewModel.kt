@@ -65,6 +65,15 @@ class OrderViewModel @Inject constructor(
         }
     }
 
+    fun deleteOrder(orderId: String) {
+        viewModelScope.launch {
+            orderRepository.deleteOrder(orderId)
+            orders = orderRepository.getOrders() // Refresh order list
+            setupOrderList()
+        }
+    }
+
+
     fun onOrderClick(orderId: String) {
         initOrderForDialog(orderId)
         isOrderDialogShown = true

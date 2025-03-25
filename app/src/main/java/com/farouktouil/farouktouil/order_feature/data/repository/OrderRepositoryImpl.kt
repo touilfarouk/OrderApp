@@ -63,4 +63,10 @@ class OrderRepositoryImpl @Inject constructor(
     override suspend fun getDelivererNameById(delivererId: Int): String {
         return delivererDao.getDelivererNameById(delivererId)
     }
+
+    override suspend fun deleteOrder(orderId: String) {
+        orderDao.deleteOrderProducts(orderId) // Delete associated products first
+        orderDao.deleteOrder(orderId) // Then delete the order itself
+    }
+
 }

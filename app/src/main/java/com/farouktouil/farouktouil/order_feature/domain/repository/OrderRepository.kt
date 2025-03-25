@@ -9,6 +9,8 @@ interface OrderRepository {
 
     suspend fun insertOrder(order: Order)
 
+    suspend fun deleteOrder(orderId: String) // Added delete function
+
     suspend fun getOrders():List<Order>
 
     fun getDeliverers(): Flow<List<Deliverer>>

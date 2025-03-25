@@ -22,4 +22,12 @@ interface OrderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrderProductEntities(orderProductEntities:List<OrderProductEntity>)
 
+    @Transaction
+    @Query("DELETE FROM OrderEntity WHERE orderId = :orderId")
+    suspend fun deleteOrder(orderId: String)
+
+    @Transaction
+    @Query("DELETE FROM OrderProductEntity WHERE orderId = :orderId")
+    suspend fun deleteOrderProducts(orderId: String)
+
 }
