@@ -15,13 +15,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.farouktouil.farouktouil.export_feature.presentation.ExportScreen
 import com.farouktouil.farouktouil.order_feature.presentation.state.OrderListItem
 import com.farouktouil.farouktouil.ui.theme.onPrimaryLight
 import com.farouktouil.farouktouil.ui.theme.primaryLight
 @Composable
 fun OrderUiListItem(
     orderListItem: OrderListItem,
-    onDeleteClick: () -> Unit,  // Added delete function
+    onDeleteClick: () -> Unit, // Delete function
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -34,18 +35,28 @@ fun OrderUiListItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                orderListItem.delivererName,
-                fontWeight = FontWeight.Bold,
-                color = primaryLight,
-                fontSize = 20.sp
-            )
-            Text(
-                "%.2f".format(orderListItem.totalAmount) + " DZ",
-                fontWeight = FontWeight.Bold,
-                color = primaryLight,
-                fontSize = 20.sp
-            )
+            Column {
+                Text(
+                    orderListItem.delivererName,
+                    fontWeight = FontWeight.Bold,
+                    color = primaryLight,
+                    fontSize = 20.sp
+                )
+                Text(
+                    "%.2f".format(orderListItem.totalAmount) + " DZ",
+                    fontWeight = FontWeight.Bold,
+                    color = primaryLight,
+                    fontSize = 20.sp
+                )
+            }
+            // 🗑️ Delete Icon aligned to the right
+            IconButton(onClick = onDeleteClick) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete Order",
+                    tint = Color.Red
+                )
+            }
         }
         Divider(color = Color.Gray)
         Box(
@@ -58,13 +69,6 @@ fun OrderUiListItem(
                 fontSize = 16.sp
             )
         }
-        // 🗑️ Delete Button
-        IconButton(onClick = onDeleteClick) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = "Delete Order",
-                tint = Color.Red
-            )
-        }
+        ExportScreen()
     }
 }

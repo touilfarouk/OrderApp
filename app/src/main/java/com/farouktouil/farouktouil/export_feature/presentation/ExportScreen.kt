@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.ImportExport
+import androidx.compose.material.icons.filled.IosShare
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -77,28 +79,17 @@ fun ExportScreen(
               //  color = white,
                 textAlign = TextAlign.Center
             )
-            Button(
-                onClick = {
-                    exportViewModel.generateExportFile()
-                },
-                colors = ButtonDefaults.buttonColors(
-                    //backgroundColor = primaryLight,
-                    //contentColor = primaryLight,
-                    //disabledBackgroundColor = primaryLight
-                ),
-                modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .padding(10.dp),
-                shape = CircleShape,
+            IconButton(
+                onClick = { exportViewModel.generateExportFile() },
                 enabled = !fileExportState.isSharedDataReady
-            ){
-                Text(
-                    text = "Generate File",
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.IosShare, // Export file icon
+                    contentDescription = "Export File",
+                    tint = MaterialTheme.colorScheme.primary // Adjust color if needed
                 )
             }
+
             AnimatedVisibility(visible = fileExportState.isSharedDataReady) {
                 IconButton(
                     onClick = {
