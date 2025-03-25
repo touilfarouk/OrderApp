@@ -10,8 +10,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,11 +41,15 @@ import com.farouktouil.farouktouil.deliverer_feature.presentation.DelivererViewM
 import com.farouktouil.farouktouil.core.domain.model.Product
 import com.farouktouil.farouktouil.ui.theme.errorLight
 import com.farouktouil.farouktouil.ui.theme.primaryContainerLight
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductScreen(
     navController: NavController,
+    drawerState: DrawerState,
+    scope: CoroutineScope,
     delivererId: Int?, // Add delivererId as a parameter
     productViewModel: ProductViewModel = hiltViewModel()
 ) {
@@ -61,7 +67,16 @@ fun ProductScreen(
     val deliverers by productViewModel.deliverers.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(text = "Products") }) },
+        topBar =  {
+            TopAppBar(
+                title = { Text("Products") },
+                navigationIcon = {
+                    IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                    }
+                }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 isAddingProduct.value = true

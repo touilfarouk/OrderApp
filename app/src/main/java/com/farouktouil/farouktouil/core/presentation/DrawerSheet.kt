@@ -54,7 +54,6 @@ fun DrawerSheet(navController: NavController, drawerState: DrawerState, scope: C
                     end = Offset(1000f, 1000f) // Adjust gradient direction
                 )
             )
-
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
@@ -79,15 +78,28 @@ fun DrawerSheet(navController: NavController, drawerState: DrawerState, scope: C
         Column {
             TextButton(onClick = {
                 scope.launch { drawerState.close() }
-                navController.navigate(ScreenRoutes.OrderScreen.route)
+                navController.navigate(ScreenRoutes.OrderScreen.route) {
+                    popUpTo(ScreenRoutes.OrderScreen.route) { inclusive = true }
+                }
             }) {
                 Text("Orders")
             }
             TextButton(onClick = {
                 scope.launch { drawerState.close() }
-                navController.navigate(ScreenRoutes.DelivererScreen.route)
+                navController.navigate(ScreenRoutes.DelivererScreen.route) {
+                    popUpTo(ScreenRoutes.DelivererScreen.route) { inclusive = true }
+                }
             }) {
                 Text("Deliverers")
+            }
+            TextButton(onClick = {
+                scope.launch { drawerState.close() }
+                val delivererId = 1 // Replace this with actual deliverer ID logic
+                navController.navigate("product_screen/$delivererId") {
+                    popUpTo("product_screen/$delivererId") { inclusive = true }
+                }
+            }) {
+                Text("Products")
             }
         }
     }

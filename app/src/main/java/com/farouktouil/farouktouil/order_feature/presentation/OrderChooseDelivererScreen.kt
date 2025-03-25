@@ -42,7 +42,7 @@ fun OrderChooseDelivererScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        floatingActionButton = {
+    /*    floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate(ScreenRoutes.DelivererScreen.route) },
                 // containerColor = orange
@@ -53,7 +53,7 @@ fun OrderChooseDelivererScreen(
                    // tint = white
                 )
             }
-        },
+        },*/
         topBar = {
             TopAppBar(
                 title = { Text("Order Overview", ) },

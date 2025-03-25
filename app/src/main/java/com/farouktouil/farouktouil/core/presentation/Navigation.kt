@@ -53,7 +53,7 @@ fun Navigation() {
                 val delivererId = backStackEntry.arguments?.getInt("delivererId")
                 ProductScreen(
                     navController = navController,
-                    delivererId = delivererId
+                    delivererId = delivererId, drawerState = drawerState, scope = scope
                 )
             }
 
